@@ -33,6 +33,19 @@ There needs to be validation of input coordinates and a check whether the addres
 
 After inserting a symbol into a cell, perform a check whether there is a complete line (horizontal, vertical, or diagonal) of same symbols.
 
+## Architecture
+
+The program deals with user input which is intended to provide cell addresses to put the user symbol in.
+The input happens in an alternating fashion between the X player and the O player.
+Input needs to be validated according to the rules of the game.
+
+The program outputs the game board with current status of cells. The board consists of borders and cell contents.
+
+The program runs in a cycle until either of these things happens:
+* the board is full (there are no empty cells)
+* the last move by a player resulted in a line of 3 symbols, which is a win by that player.
+
+
 ## Step-by-step Guide
 
 1. Write a function `output_field(list_of_cells)` that takes a list of nine elements, and draws the game field as shown above.
