@@ -45,6 +45,7 @@ The program runs in a cycle until either of these things happens:
 * the board is full (there are no empty cells)
 * the last move by a player resulted in a line of 3 symbols, which is a win by that player.
 
+The program maintains two things in its state: the list of cells on the board, and the party whose turn it is.
 
 ## Step-by-step Guide
 
@@ -73,11 +74,13 @@ The program runs in a cycle until either of these things happens:
     * diagonal line -- either of two main diagonals 
     
     The function returns True if there is any of such lines on the field.
+1. Write a function `check_board_full(list_of_cells)` that would check if there are cells available yet.
     
 1. Write a function `main()` that would maintain the `list_of_cells` variable and repeatedly do:
     * `output_field()`
     * `input_cell()`
     * `check_lines()`
+    * `check_board_full()`
     
     alternating the `party` between `x` and `o` for each iteration, until a line is found (the `check_lines()` function returns True)
     or the field is full (9 moves have been made).
