@@ -1,7 +1,7 @@
 # tictactoe
 A game of tic-tac-toe in Python
 
-New features
+**New features
 
 1. New format and resizable board (3-9):
 
@@ -24,13 +24,14 @@ New features
 3. Draw the board with unicode blocks (tkinker next)
 4. Use regular expressions to check the user inputs.
 5. The algorithm to match the lines, use four registers
-    for each player:
-        1. rowx (list)
-        2. columny (list)
-        3. first diagonal (int)
-        4. fourth diagonal (int)
-    every time that the player input a coordinate, the
-    registers are checked and updated if not a line yet.
+   for each player:
+   - rowx (list)
+   - columny (list)
+   - first diagonal (int)
+   - fourth diagonal (int)
+   
+    When the player input a coordinate, the registers 
+    are checked and updated if not a line yet.
     Basically when a register value == the size length
     of a line, then we have a line match.
 
