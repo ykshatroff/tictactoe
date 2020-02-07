@@ -1,7 +1,7 @@
 # tictactoe
 A game of tic-tac-toe in Python
 
-**New features
+**New features**
 
 1. New format and resizable board (3-9):
 
