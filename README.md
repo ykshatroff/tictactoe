@@ -3,7 +3,7 @@ A game of tic-tac-toe in Python
 
 New features
 
-1.- New format and resizable board (3-9):
+1. New format and resizable board (3-9):
 
 			 ╓━━━━╦━━━━╦━━━━╦━━━━╦━━━━╗
 			 │    │    │    │    │    │
@@ -17,25 +17,25 @@ New features
 			 │    │    │    │    │    │
 			 ╚━━━━╩━━━━╩━━━━╩━━━━╩━━━━╝
 
-2.- Encapsulate logic and data in classes:
+2. Encapsulate logic and data in classes:
 	classes Board, Player, Msg
-3.- Create custom exception: ErrorCellTaken
-2.- Use logging to log the match in tictactoe.log
-3.- Draw the board with unicode blocks (tkinker next)
-4.- Use regular expressions to check the user inputs.
-5.- The algorithm to match the lines, use four registers
+3. Create custom exception: ErrorCellTaken
+2. Use logging to log the match in tictactoe.log
+3. Draw the board with unicode blocks (tkinker next)
+4. Use regular expressions to check the user inputs.
+5. The algorithm to match the lines, use four registers
     for each player:
-        1.- rowx (list)
-        2.- columny (list)
-        3.- first diagonal (int)
-        4.- fourth diagonal (int)
+        1. rowx (list)
+        2. columny (list)
+        3. first diagonal (int)
+        4. fourth diagonal (int)
     every time that the player input a coordinate, the
     registers are checked and updated if not a line yet.
     Basically when a register value == the size length
     of a line, then we have a line match.
 
 
-class Msg()
+Class Msg()
 
 	- It is used only for stdout/stdin messaging, and avoid having
           print(), input() statements everywhere with all those formats 
@@ -45,7 +45,7 @@ class Msg()
 		- out_msg: to be used with print statements.
 		- ask_msg: to be used with input statements.
 
-class Board(line_size)
+Class Board(line_size)
 
 	- push(x,y,token): Store the last movement in the board.
 
@@ -53,7 +53,7 @@ class Board(line_size)
 
 	- is_not_full():   check if there are still free cells in the board.
 
-class Player(line_size, token)
+Class Player(line_size, token)
 
 	It mainly store the player token symbol and implement the logic
         to check if it has matched a line within the current movement.
