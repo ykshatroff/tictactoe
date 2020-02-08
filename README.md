@@ -1,88 +1,121 @@
 # tictactoe
 A game of tic-tac-toe in Python
 
-This is how the field should look like:
+**New features**
 
-```
-+-+-+-+
-| | | |
-+-+-+-+
-| | | |
-+-+-+-+
-| | | |
-+-+-+-+
+1. New format and resizable board (3-9):
 
-X: Input x, y: > 1, 1
-```
+			 ╓━━━━╦━━━━╦━━━━╦━━━━╦━━━━╗
+			 │    │    │    │    │    │
+			 ╠━━━━╬━━━━╬━━━━╬━━━━╬━━━━╣
+			 │    │    │    │    │    │
+			 ╠━━━━╬━━━━╬━━━━╬━━━━╬━━━━╣
+			 │    │    │    │    │    │
+			 ╠━━━━╬━━━━╬━━━━╬━━━━╬━━━━╣
+			 │    │    │    │    │    │
+			 ╠━━━━╬━━━━╬━━━━╬━━━━╬━━━━╣
+			 │    │    │    │    │    │
+			 ╚━━━━╩━━━━╩━━━━╩━━━━╩━━━━╝
 
-After processing the coordinates input for X, it would look like:
+2. Encapsulate logic and data in classes:
+	classes Board, Player, Msg
+3. Create custom exception: ErrorCellTaken
+2. Use logging to log the match in tictactoe.log
+3. Draw the board with unicode blocks (tkinker next)
+4. Use regular expressions to check the user inputs.
+5. The algorithm to match the lines, use four registers
+   for each player:
+   - rowx (list)
+   - columny (list)
+   - first diagonal (int)
+   - fourth diagonal (int)
+   
+    When the player input a coordinate, the registers 
+    are checked and updated if not a line yet.
+    Basically when a register value == the size length
+    of a line, then we have a line match.
 
-```
-+-+-+-+
-|x| | |
-+-+-+-+
-| | | |
-+-+-+-+
-| | | |
-+-+-+-+
 
-O: Input x, y: > 1, 1
-```
+Class Msg()
 
-There needs to be validation of input coordinates and a check whether the addressed cell already contains an X or O.
+	- It is used only for stdout/stdin messaging, and avoid having
+          print(), input() statements everywhere with all those formats 
+          characters.
+	  
+	- It use two dictionaries: 
+		- out_msg: to be used with print statements.
+		- ask_msg: to be used with input statements.
 
-After inserting a symbol into a cell, perform a check whether there is a complete line (horizontal, vertical, or diagonal) of same symbols.
+Class Board(line_size)
 
-## Architecture
+	- push(x,y,token): Store the last movement in the board.
 
-The program deals with user input which is intended to provide cell addresses to put the user symbol in.
-The input happens in an alternating fashion between the X player and the O player.
-Input needs to be validated according to the rules of the game.
+	- exception_if_cell_is_not_free(x,y): Raise an exception if the cell is taken.
 
-The program outputs the game board with current status of cells. The board consists of borders and cell contents.
+	- is_not_full():   check if there are still free cells in the board.
 
-The program runs in a cycle until either of these things happens:
-* the board is full (there are no empty cells)
-* the last move by a player resulted in a line of 3 symbols, which is a win by that player.
+Class Player(line_size, token)
 
-The program maintains two things in its state: the list of cells on the board, and the party whose turn it is.
+	It mainly store the player token symbol and implement the logic
+        to check if it has matched a line within the current movement.
 
-## Step-by-step Guide
+	- xrow(): check if we have a row, if not then update the register
+	- ycolumn(): check if we have a column, if not then update the register
+	- first_diagonal(): check if we have a first_diagonal, if not then update the register
+	- second_diagonal(): check if we have a second_diagonal, if not then update the register
+	- coordinates(x,y): update values (x,y) in the instance.
 
-1. Write a function `output_field(list_of_cells)` that takes a list of nine elements, and draws the game field as shown above.
-    * draw horizontal rulers as a simple `print("+-+-+-+")`
-    * draw vertical rulers and cell contents with `str.format()` method, filling cell contents in a loop:
-        * each iteration of the loop operates on a 3-element slice of the `list_of_cells` corresponding to the rows
-        * the `pattern.format()` pattern contains `"|"`-delimited placeholders for each of the 3 cells of the row 
-1. Write a function `input_cell(list_of_cells, party)` that takes two arguments:
-    * a list of 9 cells as in previous step,
-    * the party (`x` or `o`) whose turn it is
-    
-    The `input_cell` function:
-    * Outputs the party whose turn is expected
-    * takes two coordinates from user input (the Python built-in `input()` function) and converts them to `int`
-    * checks validity of these coordinates (in range between 1 and 3)
-    * checks whether the cell under these coordinates is free yet
-    * if so, updates the list of cells with the new value for the cell
-    * if not, raises an exception (ValueError) with the problem explanation
-    * returns the new `list_of_cells`
-1. Write a function `check_lines(list_of_cells, party)` that operates on a list of 9 cells, and checks
-    whether there is any of these lines of the same symbols (either `x` or `o`, the `party` argument):
-    
-    * horizontal line -- any row of cells contain the same symbol
-    * vertical line -- any column of cells contain the same symbol
-    * diagonal line -- either of two main diagonals 
-    
-    The function returns True if there is any of such lines on the field.
-1. Write a function `check_board_full(list_of_cells)` that would check if there are cells available yet.
-    
-1. Write a function `main()` that would maintain the `list_of_cells` variable and repeatedly do:
-    * `output_field()`
-    * `input_cell()`
-    * `check_lines()`
-    * `check_board_full()`
-    
-    alternating the `party` between `x` and `o` for each iteration, until a line is found (the `check_lines()` function returns True)
-    or the field is full (9 moves have been made).
-    
-    If the `input_cell()` function raised an exception, this should be handled (the current party is given another try) and the count of moves not updated.
+Class ErrorCellTaken
+
+	it is a subclass of Exception and it only implement a custom exception:
+	ErrorCellTaken
+
+
+output_field(Board_obj)
+	
+	- Draw the board and the tokens
+	- Takes a Board object as argument.
+
+input_cell(Board_obj, Player_obj)
+
+	- Get user (x,y) input.
+	- Use regular expresion to check if the input string is valid.
+	- Handle the exception ErrorCellTaken, which may be raised by
+          Board.exception_if_cell_is_not_free(x,y)
+
+check_lines(Player_obj)
+
+	- Take a Player object as argument.
+	- Check if any of its methods to check for line matchs return True.
+
+check_if_free_lines(players)
+
+	- It basically tell us if the players has still chances to make
+          a line, which is useful information to the user if the board
+	  is very big. It would skip the game after the next movement.
+
+ask_line_size()
+	
+	- Basically it ask to the user the size of the board.
+ 	- Validate the input with regular expressions.
+	- Run an infinite loop until match a valid input.
+
+play_again()
+
+	- It keeps calling main()  as long as the user wants to
+	  continue playing.
+
+main()
+
+	- Create the instances:
+
+		- Board -->  board 
+		- Player --> player1, player2
+
+	- Manage the execution flow calling:
+
+		- output_field(board)
+		- input_cell(board, party)
+		- check_lines(party)
+		- play_again()
+		
